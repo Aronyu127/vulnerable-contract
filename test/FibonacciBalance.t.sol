@@ -4,15 +4,12 @@ pragma solidity ^0.8.13;
 import {Test, console2} from "forge-std/Test.sol";
 import {FibonacciLib} from "../src/FibonacciLib.sol";
 import {FibonacciBalance} from "../src/FibonacciBalance.sol";
-import {Attacker} from "../src/Attacker.sol";
 contract FibonacciBalaneTest is Test {
     FibonacciLib public fibonacciLib;
     FibonacciBalance public fibonacciBalance;
-    Attacker public attackerContract;
     address attacker;
     function setUp() public {
         fibonacciLib = new FibonacciLib();
-        attackerContract = new Attacker();
         fibonacciBalance = new FibonacciBalance(address(fibonacciLib));
         attacker = makeAddr("attacker");
         vm.deal(address(fibonacciBalance), 10 ether);
@@ -21,8 +18,8 @@ contract FibonacciBalaneTest is Test {
 
     function testWithdraw() public {
         vm.startPrank(attacker);
-        bytes memory callData = abi.encodeWithSelector(fibonacciLib.setCreator.selector, address(attackerContract));
-        address(fibonacciBalance).call(callData);
+        //Do something
+        
         fibonacciBalance.withdraw{value: 5 ether}();
         assertEq(attacker.balance, 15 ether);
         vm.stopPrank();

@@ -1,4 +1,3 @@
-import "forge-std/Test.sol";
 contract FibonacciBalance {
     address public fibonacciLibrary;
     // the current fibonacci number to withdraw
@@ -21,7 +20,6 @@ contract FibonacciBalance {
         // calculate the fibonacci number for the current withdrawal user
         // this sets calculatedFibNumber
         bytes memory callData = abi.encodeWithSelector(fibSig, withdrawalCounter);
-        console.log("calculatedFibNumber: %s", calculatedFibNumber);
         (bool result, bytes memory _returnedData) = fibonacciLibrary.delegatecall(callData);
         require(result);
         payable(msg.sender).transfer(calculatedFibNumber * 1 ether);
